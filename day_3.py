@@ -12,7 +12,6 @@ def day_3_1(forest):
     while y < y_size - 1:
         x = (x + 3) % tile_size
         y += 1
-        # print(f'({x}/{y}) ∈ ({tile_size}/{y_size})?')
         trees += forest[y][x] == '#'
     return trees
 
