@@ -19,6 +19,11 @@ def day_1_2(expenses: Iterable[int], k) -> int:
             return reduce(mul, t)
 
 
+@run(int)
+def day_1_golf(expenses: Iterable[int], k) -> int:
+    return reduce(mul, [i for i in product(expenses, repeat=k) if sum(i) == 2020])
+
+
 if __name__ == '__main__':
     for i in range(2, 4):
         print(i, day_1_2(i), sep=': ')
