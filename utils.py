@@ -28,3 +28,6 @@ def run(mapper: Callable[[str], T] = int):
 
 def ident(x):
     return x
+
+def part(idx: int):
+    return lambda s: (s[:idx], s[idx:])
