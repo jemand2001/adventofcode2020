@@ -45,26 +45,18 @@ def parse(line: str) -> Mapping[str, str]:
 
 def is_valid(entry: Mapping[str, str]) -> bool:
     try:
-        suffix = entry['hgt'][-2:]
-        height = int(entry['hgt'][:-2])
-        height_valid = (
-                suffix in ('in', 'cm') and
-                height in range(*heights[suffix])
-        )
         return (
                 1920 <= int(entry['byr']) <= 2002 and
                 2010 <= int(entry['iyr']) <= 2020 and
                 2020 <= int(entry['eyr']) <= 2030 and
-                height_valid and
+                int(entry['hgt'][:-2]) in range(*heights[entry['hgt'][-2:]]) and
                 (hcl := entry['hcl'])[0] == '#' and
                 len(hcl) == 7 and
                 int(hcl[1:], base=16) >= 0 and
                 entry['ecl'] in EYE_COLORS and
                 len(entry['pid']) == 9
         )
-    except KeyError:
-        return False
-    except ValueError:
+    except:
         return False
 
 
