@@ -8,6 +8,10 @@ fi
 exe="./Day_$1"
 src="./.cache/day_$1.txt"
 
+if [ ! -d ".cache" ]; then
+    mkdir .cache
+fi
+
 if [ ! -f "$src" ]; then
     echo "Getting input: day $1"
     source .env
