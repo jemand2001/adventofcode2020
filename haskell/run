@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <day>"
+    exit 1
+fi
+
+exe="./Day_$1"
+src="./.cache/day_$1.txt"
+
+if [ ! -f "$src" ]; then
+    echo "Getting input: day $1"
+    source .env
+    if ! wget -qO $src https://adventofcode.com/2020/day/$1/input --header="cookie: $COOKIE"; then
+        echo "\`wget\` failed! aborting." >&2
+        exit 2
+    fi
+fi
+
+echo "Making executable: $exe"
+if ! make $exe; then
+    echo "\`make\` failed! aborting." >&2
+    exit 3
+fi
+
+echo "Executing $exe"
+$exe < $src
