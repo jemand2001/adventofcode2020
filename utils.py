@@ -11,7 +11,7 @@ ROOT = "https://adventofcode.com/2020/day/"
 h = httplib2.Http(".cache")
 
 
-def run(mapper: Callable[[str], T] = int):
+def run(mapper: Callable[[str], T] = int, sep: str = '\n'):
     def decorator(f: Callable[[List[T], Any], R]) -> Callable[..., R]:
         day_num = f.__name__.split("_")[1]
         url = join(ROOT, day_num, "input")
@@ -20,7 +20,7 @@ def run(mapper: Callable[[str], T] = int):
 
         @wraps(f)
         def wrapper(*args, **kwargs):
-            data = list(map(mapper, content.split('\n')))
+            data = list(map(mapper, content.split(sep)))
             return f(data, *args, **kwargs)
         return wrapper
     return decorator
