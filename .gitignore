@@ -1,5 +1,7 @@
 *
 !*.py
 !README.md
+!.gitignore
+!haskell
 env.py
 __init__.py
