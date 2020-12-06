@@ -4,7 +4,7 @@ This repository contains some utilities as well as my own solutions for [advent 
 
 Please, for your sake, *DO NOT* use the solutions if you don't understand them.
 
-####How to use `run`
+#### How to use `run`
 `utils.run` is a function that takes a conversion function and returns a decorator that will call the decorated function
 with the inputs converted to the correct format. Usually this will be something like `int` or `utils.identity`.
 
