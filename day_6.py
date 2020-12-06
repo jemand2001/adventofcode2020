@@ -1,15 +1,13 @@
 from utils import run, ident
 from typing import List
 
-@run(ident)
-def day_6_1(questions: List[str]):
-    groups = '\n'.join(questions).split('\n\n')
+@run(ident, '\n\n')
+def day_6_1(groups: List[str]):
     return sum(len(set.union(*[{*line} for line in group.split()])) for group in groups)
 
 
-@run(ident)
-def day_6_2(questions: List[str]):
-    groups = '\n'.join(questions).split('\n\n')
+@run(ident, '\n\n')
+def day_6_2(groups: List[str]):
     return sum(len(set.intersection(*[{*line} for line in group.split()])) for group in groups)
 
 

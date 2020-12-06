@@ -2,9 +2,8 @@ from utils import run, ident
 from typing import List, Mapping
 
 
-@run(ident)
+@run(ident, '\n\n')
 def day_4_1(entries: List[str]):
-    entries: List[str] = '\n'.join(entries).split('\n\n')
     entries_d: List[Mapping[str, str]] = []
     for e in entries:
         entries_d.append(parse(e))
@@ -60,9 +59,9 @@ def is_valid(entry: Mapping[str, str]) -> bool:
         return False
 
 
-@run(ident)
+@run(ident, '\n\n')
 def day_4_2(lines: List[str]):
-    entries = [parse(e) for e in '\n'.join(lines).split('\n\n')]
+    entries = [parse(e) for e in lines]
     return sum(is_valid(entry) for entry in entries)
 
 
