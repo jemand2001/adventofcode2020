@@ -2,3 +2,4 @@
 !*.py
 !README.md
 env.py
+__init__.py
