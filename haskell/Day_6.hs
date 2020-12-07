@@ -3,7 +3,7 @@ module Main where
 joinLines :: [String] -> [String]
 joinLines [] = []
 joinLines ("" : xs) = joinLines xs
-joinLines xs = unlines (takeWhile (not . null) xs) : joinLines (dropWhile (not . null) xs)
+joinLines xs = unlines (takeWhile (/= "") xs) : joinLines (dropWhile (/= "") xs)
 
 replace :: Eq a => a -> a -> [a] -> [a]
 replace a b = map (\x -> if x == a then b else x)
