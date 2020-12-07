@@ -1,4 +1,4 @@
-from typing import Callable, List, TypeVar, Any
+from typing import Callable, List, TypeVar, Any, Iterable
 import httplib2
 from functools import wraps
 from os.path import join
@@ -26,7 +26,7 @@ def run(mapper: Callable[[str], T] = int, sep: str = '\n'):
     return decorator
 
 
-def test(mapper: Callable[[str], T] = int, sep: str = '\n', *examples: str):
+def test(mapper: Callable[[str], T] = int, sep: str = '\n', *, examples: Iterable[str] = ()):
     def decorator(f: Callable[[List[T], Any], R]) -> Callable[..., R]:
         @wraps(f)
         def wrapper(*args, **kwargs):
