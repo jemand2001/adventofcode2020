@@ -31,3 +31,6 @@ def ident(x):
 
 def part(idx: int):
     return lambda s: (s[:idx], s[idx:])
+
+def split_at(sep):
+    return lambda s: s.split(sep)
