@@ -26,6 +26,14 @@ def run(mapper: Callable[[str], T] = int, sep: str = '\n'):
     return decorator
 
 
+def test(mapper: Callable[[str], T] = int, sep: str = '\n', *examples: str):
+    def decorator(f: Callable[[List[T], Any], R]) -> Callable[..., R]:
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            return tuple(f(list(map(mapper, content.split(sep))), *args, **kwargs) for content in examples)
+        return wrapper
+    return decorator
+
 def ident(x):
     return x
 
