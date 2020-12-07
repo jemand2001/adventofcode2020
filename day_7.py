@@ -46,7 +46,8 @@ def explore(rules: Dict[str, Dict[str, int]], origin: str) -> Dict[str, int]:
     print(d)
     return d
 
-def day_7_2_inner(lines: List[Tuple[str, str]]):
+@run(split_at(' contain '))
+def day_7_2(lines: List[Tuple[str, str]]):
     rules: Dict[str, Dict[str, int]] = {}
     for outer, inner in lines:
         d = {}
@@ -56,9 +57,6 @@ def day_7_2_inner(lines: List[Tuple[str, str]]):
                 d[color.rsplit(maxsplit=1)[0]] = int(count)
         rules[outer.rsplit(maxsplit=1)[0]] = d
     return sum(explore(rules, 'shiny gold').values())
-
-
-day_7_2 = run(split_at(' contain '))(day_7_2_inner)
 
 
 if __name__ == '__main__':
