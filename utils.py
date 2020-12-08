@@ -12,6 +12,10 @@ h = httplib2.Http(".cache")
 
 
 def run(mapper: Callable[[str], T] = int, sep: str = '\n'):
+    """the run decorator.
+    :param mapper: a function applied to all elements of the input (usually lines)
+    :param sep: the separator between elements of the input (usually \n)
+    """
     def decorator(f: Callable[[List[T], Any], R]) -> Callable[..., R]:
         day_num = f.__name__.split("_")[1]
         url = join(ROOT, day_num, "input")
@@ -27,6 +31,11 @@ def run(mapper: Callable[[str], T] = int, sep: str = '\n'):
 
 
 def test(mapper: Callable[[str], T] = int, sep: str = '\n', *, examples: Iterable[str] = ()):
+    """the test decorator.
+    :param mapper: a function applied to all elements of the input (usually lines)
+    :param sep: the separator between elements of the input (usually \n)
+    :param examples: a collection of sample input strings
+    """
     def decorator(f: Callable[[List[T], Any], R]) -> Callable[..., R]:
         @wraps(f)
         def wrapper(*args, **kwargs):
