@@ -50,4 +50,4 @@ def part(idx: int):
     return lambda s: (s[:idx], s[idx:])
 
 def split_at(sep):
-    return lambda s: s.split(sep)
+    return lambda s: tuple(s.split(sep))
