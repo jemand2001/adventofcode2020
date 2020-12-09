@@ -1,5 +1,15 @@
-from utils import run, split_at
+from utils import run, split_at, test
 from typing import List, Tuple
+
+examples = ("""nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6""",)
 
 def parse_instruction(line: str):
     i, arg = line.split(' ')
@@ -22,35 +32,39 @@ def day_8_1(instructions: List[Tuple[str, int]]) -> int:
         current += 1
     return acc
 
-@run(parse_instruction)
+@test(parse_instruction, examples=examples)
 def day_8_2(instructions: List[Tuple[str, int]]) -> int:
     visited = []
-    changed = None
+    changed = []
     tried = set()
     current = 0
     acc = 0
     while current < len(instructions):
         visited.append(current)
         instruction, arg = instructions[current]
+        print(instruction, arg)
         if instruction == 'jmp':
             if current + arg not in visited:
-                if changed is None and current not in tried:
-                    changed = current, acc
-                    tried.add(changed)
+                if len(changed) == 0 and current not in tried:
+                    changed.append((current, acc))
+                    tried.add(current)
                     current += 1
                 else:
-                    current, acc = changed
-                    changed = None
+                    current, acc = changed.pop()
+                    # changed = None
                 continue
+            else:
+                current += arg
         if instruction == 'nop':
             if current + 1 in visited and current + arg >= len(instructions):
-                if changed is None and current not in tried:
-                    changed = current, acc
-                    tried.add(changed)
+                if len(changed) == 0 and current not in tried:
+                    changed.append((current, acc))
+                    tried.add(current)
                     current += arg
                 else:
-                    current, acc = changed
-                    changed = None
+                    current, acc = changed.pop()
+                    # changed = None
+            current += 1
             continue
         elif instruction == 'acc':
             acc += arg
@@ -59,5 +73,5 @@ def day_8_2(instructions: List[Tuple[str, int]]) -> int:
 
 
 if __name__ == '__main__':
-    print('acc (repeat):', day_8_1())
+    # print('acc (repeat):', day_8_1())
     print('acc (change):', day_8_2())
