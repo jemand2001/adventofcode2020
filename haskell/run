@@ -14,7 +14,6 @@ fi
 
 if [ ! -f "$src" ]; then
     echo "Getting input: day $1"
-    source .env
     if ! wget -qO $src https://adventofcode.com/2020/day/$1/input --header="cookie: $COOKIE"; then
         echo "\`wget\` failed! aborting." >&2
         exit 2
