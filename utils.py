@@ -43,6 +43,17 @@ def test(mapper: Callable[[str], T] = int, sep: str = '\n', *, examples: Iterabl
         return wrapper
     return decorator
 
+def cached(f: Callable[..., R]) -> Callable[..., R]:
+    calls = {}
+
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        arguments = tuple([*args, *kwargs.items()])
+        if arguments not in calls:
+            calls[arguments] = f(*args, **kwargs)
+        return calls[arguments]
+    return wrapper
+
 def ident(x):
     return x
 

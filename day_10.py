@@ -1,7 +1,6 @@
-from utils import run, test
+from utils import run, test, cached
 from typing import List, Tuple
 from collections import Counter
-from functools import lru_cache
 
 examples = ("""16
 10
@@ -62,7 +61,7 @@ def day_10_1(adapters: List[int]):
     # differences += Counter([3])
     return differences[1] * differences[3]
 
-@lru_cache(maxsize=None)
+@cached
 def combinations(adapters: Tuple[int], current):
     if current == adapters[-1]:
         return 1
