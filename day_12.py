@@ -15,8 +15,6 @@ transform = {
     'W': complex(-1, 0)
 }
 
-directions = ['E', 'S', 'W', 'N']
-
 
 def parse_command(line: str) -> Command:
     return line[0], int(line[1:])
