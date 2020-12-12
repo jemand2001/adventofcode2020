@@ -1,4 +1,4 @@
-from utils import run, split_at, test
+from utils import run
 from typing import List, Tuple
 
 examples = ("""nop +0
@@ -32,7 +32,6 @@ def day_8_1(instructions: List[Tuple[str, int]]) -> int:
         current += 1
     return acc
 
-# @test(parse_instruction, examples=examples)
 @run(parse_instruction)
 def day_8_2(instructions: List[Tuple[str, int]]) -> int:
     nops, jmps, visited, ip = [], [], [], 0
@@ -89,5 +88,5 @@ def day_8_2(instructions: List[Tuple[str, int]]) -> int:
 
 
 if __name__ == '__main__':
-    # print('acc (repeat):', day_8_1())
+    print('acc (repeat):', day_8_1())
     print('acc (change):', day_8_2())
