@@ -35,14 +35,6 @@ def day_8_1(instructions: List[Tuple[str, int]]) -> int:
 @run(parse_instruction)
 def day_8_2(instructions: List[Tuple[str, int]]) -> int:
     nops, jmps, visited, ip = [], [], [], 0
-    # jmps = []
-    # visited = []
-    # ip = 0
-    # for n, (instruction, _) in enumerate(instructions):
-    #     if instruction == 'nop':
-    #         nops.append(n)
-    #     elif instruction == 'jmp':
-    #         jmps.append(n)
     while ip not in visited:
         visited.append(ip)
         if instructions[ip][0] == 'jmp':
