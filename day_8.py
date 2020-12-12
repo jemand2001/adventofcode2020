@@ -32,44 +32,60 @@ def day_8_1(instructions: List[Tuple[str, int]]) -> int:
         current += 1
     return acc
 
-@test(parse_instruction, examples=examples)
+# @test(parse_instruction, examples=examples)
+@run(parse_instruction)
 def day_8_2(instructions: List[Tuple[str, int]]) -> int:
-    visited = []
-    changed = []
-    tried = set()
-    current = 0
-    acc = 0
-    while current < len(instructions):
-        visited.append(current)
-        instruction, arg = instructions[current]
-        print(instruction, arg)
-        if instruction == 'jmp':
-            if current + arg not in visited:
-                if len(changed) == 0 and current not in tried:
-                    changed.append((current, acc))
-                    tried.add(current)
-                    current += 1
-                else:
-                    current, acc = changed.pop()
-                    # changed = None
-                continue
-            else:
-                current += arg
-        if instruction == 'nop':
-            if current + 1 in visited and current + arg >= len(instructions):
-                if len(changed) == 0 and current not in tried:
-                    changed.append((current, acc))
-                    tried.add(current)
-                    current += arg
-                else:
-                    current, acc = changed.pop()
-                    # changed = None
-            current += 1
+    nops, jmps, visited, ip = [], [], [], 0
+    # jmps = []
+    # visited = []
+    # ip = 0
+    # for n, (instruction, _) in enumerate(instructions):
+    #     if instruction == 'nop':
+    #         nops.append(n)
+    #     elif instruction == 'jmp':
+    #         jmps.append(n)
+    while ip not in visited:
+        visited.append(ip)
+        if instructions[ip][0] == 'jmp':
+            jmps.append(ip)
+            ip += instructions[ip][1]
             continue
-        elif instruction == 'acc':
-            acc += arg
-        current += 1
-    return acc
+        if instructions[ip][0] == 'nop':
+            nops.append(ip)
+            pass
+        ip += 1
+
+    for i in nops:
+        ip = acc = 0
+        visited = []
+        while ip not in visited and ip < len(instructions):
+            visited.append(ip)
+            if ip == i or instructions[ip][0] == 'jmp':
+                ip += instructions[ip][1]
+                continue
+            elif instructions[ip][0] == 'nop':
+                ip += 1
+            elif instructions[ip][0] == 'acc':
+                acc += instructions[ip][1]
+            ip += 1
+        if ip >= len(instructions):
+            return acc
+
+    for i in jmps:
+        ip = acc = 0
+        visited = []
+        while ip not in visited and ip < len(instructions):
+            visited.append(ip)
+            if ip == i or instructions[ip][0] == 'nop':
+                pass
+            elif ip == i or instructions[ip][0] == 'jmp':
+                ip += instructions[ip][1]
+                continue
+            elif instructions[ip][0] == 'acc':
+                acc += instructions[ip][1]
+            ip += 1
+        if ip >= len(instructions):
+            return acc
 
 
 if __name__ == '__main__':
