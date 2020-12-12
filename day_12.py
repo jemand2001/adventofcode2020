@@ -23,18 +23,17 @@ def parse_command(line: str) -> Command:
 
 @run(parse_command)
 def day_12_1(commands: List[Command]):
-    # x = y = 0
     pos = complex(0, 0)
-    direction = 0  # clockwise indices of directions
+    direction = complex(0, 1)
     for cmd, value in commands:
         if cmd in transform:
             pos += transform[cmd] * value
         elif cmd == 'L':
-            direction = (direction - (value // 90)) % 4
+            direction *= complex(0, 1) ** (value // 90)
         elif cmd == 'R':
-            direction = (direction + (value // 90)) % 4
+            direction *= complex(0, 1) ** (3 * value // 90)
         elif cmd == 'F':
-            pos += transform[directions[direction]] * value
+            pos += direction * value
     return int(abs(pos.imag) + abs(pos.real))
 
 # @test(parse_command, examples=examples)
@@ -48,10 +47,9 @@ def day_12_2(commands: List[Command]):
         elif cmd == 'L':
             waypoint *= complex(0, 1) ** (value // 90)
         elif cmd == 'R':
-            waypoint *= complex(0, 1) ** (3 * (value // 90))
+            waypoint *= complex(0, 1) ** (3 * value // 90)
         elif cmd == 'F':
-            total = waypoint * value
-            ship += total
+            ship += waypoint * value
     return int(abs(ship.imag) + abs(ship.real))
 
 
