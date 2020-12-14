@@ -1,4 +1,4 @@
-from utils import run, split_at, test
+from utils import run, split_at
 from typing import List, Iterator
 
 examples = ('''mask = 000000000000000000000000000000X1001X
@@ -13,11 +13,9 @@ def day_14_1(program: List[List[str]]):
     for register, value in program:
         if register == 'mask':
             mask = value
-            print('new mask:', mask)
         else:
             address = int(register.split('[')[1][:-1])
             value = list(bin(int(value))[2:])
-            print(f'value before:  {"".join(value)}')
             value.reverse()
             for i, x in enumerate(reversed(mask)):
                 if i >= len(value):
@@ -26,9 +24,7 @@ def day_14_1(program: List[List[str]]):
                     continue
                 value[i] = x
             value.reverse()
-            print(f'value after:   {"".join(value)}')
             real = int(''.join(value), 2)
-            print(f'(real):        {real}')
             mem[address] = real
     return sum(mem.values())
 
@@ -51,12 +47,9 @@ def day_14_2(program: List[List[str]]):
     for register, value in program:
         if register == 'mask':
             mask = value
-            print(f'new mask:   >>> {mask} <<<')
         else:
             address = list(bin(int(register.split('[')[1][:-1]))[2:])
             value = int(value)
-            print(f'address before: {"".join(address).rjust(36, "0")}')
-            print(f'current mask:   {mask}')
             address.reverse()
             for i, x in enumerate(reversed(mask)):
                 if i >= len(address):
@@ -65,9 +58,7 @@ def day_14_2(program: List[List[str]]):
                     continue
                 address[i] = x
             address.reverse()
-            print(f'address after:  {"".join(address).rjust(36, "0")}')
             for i in get_addresses(address):
-                print(f'changing:       {bin(i)[2:].rjust(36, "0")}')
                 mem[i] = value
     return sum(mem.values())
 
