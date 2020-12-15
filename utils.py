@@ -11,16 +11,19 @@ ROOT = "https://adventofcode.com/2020/day/"
 h = httplib2.Http(".cache")
 
 
-def run(mapper: Callable[[str], T] = int, sep: str = '\n'):
+def run(mapper: Callable[[str], T] = int, sep: str = '\n', content: str = None):
     """the run decorator.
     :param mapper: a function applied to all elements of the input (usually lines)
     :param sep: the separator between elements of the input (usually \n)
+    :param content: if given, will suppress the automatic getting of input
     """
     def decorator(f: Callable[[List[T], Any], R]) -> Callable[..., R]:
-        day_num = f.__name__.split("_")[1]
-        url = join(ROOT, day_num, "input")
-        _, content = h.request(url, "GET", headers={"Cookie": COOKIE})
-        content = content.decode().strip()
+        nonlocal content
+        if content is None:
+            day_num = f.__name__.split("_")[1]
+            url = join(ROOT, day_num, "input")
+            _, content = h.request(url, "GET", headers={"Cookie": COOKIE})
+            content = content.decode().strip()
 
         @wraps(f)
         def wrapper(*args, **kwargs):
