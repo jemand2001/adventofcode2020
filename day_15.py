@@ -16,6 +16,7 @@ def game(starting, stop):
         prev[current].append(i)
         previous = current
     print(f'max number: {max(prev.keys())}')
+    print(f'maximum times a number has occurred: {max(len(i) for i in prev.values())}')
     return previous
 
 @run(sep=',', content='11,18,0,20,1,7,16')
@@ -28,5 +29,5 @@ def day_15_2(starting: List[int]):
 
 
 if __name__ == '__main__':
-    # print('2020th number:', day_15_1())
+    print('2020th number:', day_15_1())
     print('30000000th number:', day_15_2())
