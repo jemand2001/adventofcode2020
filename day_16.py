@@ -22,7 +22,6 @@ def invalid(fields: Dict[str, List[int]], value: int) -> bool:
 @run(ident, '\n\n')
 def day_16_1(parts: List[str]):
     fields = parse_fields(parts[0])
-    # mine = parse_ticket(parts[1].split('\n')[1])
     others = [parse_ticket(line) for line in parts[2].split('\n')[1:]]
     return sum(sum(value for value in ticket if invalid(fields, value)) for ticket in others)
 
