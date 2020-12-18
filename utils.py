@@ -11,11 +11,14 @@ ROOT = "https://adventofcode.com/2020/day/"
 h = httplib2.Http(".cache")
 
 
-def run(mapper: Callable[[str], T] = int, sep: str = '\n', content: str = None):
+def run(mapper: Callable[[str], T] = int, sep: str = '\n', content: str = None, is_path: bool = False):
     """the run decorator.
     :param mapper: a function applied to all elements of the input (usually lines)
     :param sep: the separator between elements of the input (usually \n)
-    :param content: if given, will suppress the automatic getting of input
+    :param content: if given, will suppress the automatic getting of input;
+                    this should be either the puzzle input directly
+                    or a path to a file containing it
+    :param is_path: tells the decorator whether to use content as a path or content
     """
     def decorator(f: Callable[[List[T], Any], R]) -> Callable[..., R]:
         nonlocal content
@@ -24,6 +27,9 @@ def run(mapper: Callable[[str], T] = int, sep: str = '\n', content: str = None):
             url = join(ROOT, day_num, "input")
             _, content = h.request(url, "GET", headers={"Cookie": COOKIE})
             content = content.decode().strip()
+        elif is_path:
+            with open(content, 'r') as f:
+                content = f.read()
 
         @wraps(f)
         def wrapper(*args, **kwargs):
